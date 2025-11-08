@@ -61,8 +61,8 @@ export const authAPI = {
   register: (email: string, password: string, full_name: string) =>
     api.post('/register', { email, password, full_name }),
 
-  login: (email: string, password: string) =>
-    api.post('/login', { email, password }),
+  login: (username: string, password: string) =>
+    api.post('/login', { username, password }),
 
   getCurrentUser: () =>
     api.get('/current-user'),

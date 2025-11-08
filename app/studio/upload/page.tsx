@@ -7,7 +7,7 @@ import { videoAPI } from '@/lib/api';
 import axios from 'axios';
 
 export default function UploadPage() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const router = useRouter();
 
   const [title, setTitle] = useState('');
@@ -18,6 +18,11 @@ export default function UploadPage() {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState('');
   const [currentStep, setCurrentStep] = useState<'form' | 'uploading' | 'processing'>('form');
+
+  // Redirect to login if not authenticated
+  if (!authLoading && !user) {
+    router.push('/login');
+  }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -33,11 +38,6 @@ export default function UploadPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!user) {
-      router.push('/login');
-      return;
-    }
 
     if (!videoFile) {
       setError('Please select a video file');
@@ -102,12 +102,16 @@ export default function UploadPage() {
     }
   };
 
-  if (!user) {
+  if (authLoading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <div className="text-xl text-gray-600">Please login to upload videos</div>
+        <div className="text-xl text-gray-600">Loading...</div>
       </div>
     );
+  }
+
+  if (!user) {
+    return null;
   }
 
   if (currentStep === 'uploading') {

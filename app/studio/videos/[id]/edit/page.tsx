@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { videoAPI } from '@/lib/api';
 
 export default function EditVideoPage() {
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const params = useParams();
   const router = useRouter();
   const videoId = params.id as string;
@@ -20,10 +20,12 @@ export default function EditVideoPage() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    if (user && videoId) {
+    if (!authLoading && !user) {
+      router.push('/login');
+    } else if (user && videoId) {
       fetchVideo();
     }
-  }, [user, videoId]);
+  }, [user, authLoading, videoId, router]);
 
   const fetchVideo = async () => {
     try {
@@ -71,12 +73,16 @@ export default function EditVideoPage() {
     }
   };
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="text-xl text-gray-600">Loading...</div>
       </div>
     );
+  }
+
+  if (!user) {
+    return null;
   }
 
   return (
