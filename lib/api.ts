@@ -33,7 +33,7 @@ api.interceptors.response.use(
         const refreshToken = localStorage.getItem('refresh_token');
         if (refreshToken) {
           try {
-            const response = await axios.post(`${API_BASE_URL}/refresh-token`, {
+            const response = await axios.post(`${API_BASE_URL}/auth/token/refresh`, {
               refresh_token: refreshToken,
             });
 
@@ -59,17 +59,21 @@ api.interceptors.response.use(
 // Auth API
 export const authAPI = {
   register: (email: string, password: string, full_name: string) =>
-    api.post('/register', { email, password, full_name }),
+    api.post('/auth/registration', { email, password, full_name }),
 
   login: (username: string, password: string) =>
-    api.post('/login', { username, password }),
+    api.post('/auth/token', { username, password }),
 
   getCurrentUser: () =>
-    api.get('/current-user'),
+    api.get('/auth/me'),
 };
 
 // Video API
+// NOTE: These endpoints are not yet implemented in the backend (ytb-api)
+// The backend currently only has GET /studio/info endpoint
+// All video endpoints below need to be implemented in the backend first
 export const videoAPI = {
+  // TODO: Backend implementation required
   getVideos: () =>
     api.get('/studio/videos'),
 

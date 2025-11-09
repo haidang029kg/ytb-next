@@ -52,20 +52,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = async (username: string, password: string) => {
     const response = await authAPI.login(username, password);
-    const { access_token, refresh_token, user: userData } = response.data;
+    const { access_token, refresh_token } = response.data;
 
     localStorage.setItem('access_token', access_token);
     localStorage.setItem('refresh_token', refresh_token);
-    setUser(userData);
+
+    // Fetch user data after successful login
+    const userResponse = await authAPI.getCurrentUser();
+    setUser(userResponse.data);
   };
 
   const register = async (email: string, password: string, full_name: string) => {
-    const response = await authAPI.register(email, password, full_name);
-    const { access_token, refresh_token, user: userData } = response.data;
-
-    localStorage.setItem('access_token', access_token);
-    localStorage.setItem('refresh_token', refresh_token);
-    setUser(userData);
+    // Registration only creates the user and sends verification email
+    // It does NOT return tokens - user must verify email first, then login
+    await authAPI.register(email, password, full_name);
+    // User is not logged in after registration - they need to verify email first
   };
 
   const logout = () => {

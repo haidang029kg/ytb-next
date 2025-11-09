@@ -11,6 +11,7 @@ export default function RegisterPage() {
   const [fullName, setFullName] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const { register } = useAuth();
   const router = useRouter();
@@ -22,7 +23,11 @@ export default function RegisterPage() {
 
     try {
       await register(email, password, fullName);
-      router.push('/');
+      setSuccess(true);
+      // Redirect to login after 3 seconds
+      setTimeout(() => {
+        router.push('/login');
+      }, 3000);
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to register');
     } finally {
@@ -34,6 +39,13 @@ export default function RegisterPage() {
     <div className="max-w-md mx-auto mt-16">
       <div className="bg-white rounded-lg shadow-md p-8">
         <h1 className="text-3xl font-bold text-center mb-8">Join YTB</h1>
+
+        {success && (
+          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            <p className="font-semibold">Registration successful!</p>
+            <p className="text-sm mt-1">Please check your email to verify your account. You will be redirected to login...</p>
+          </div>
+        )}
 
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">

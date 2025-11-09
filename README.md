@@ -84,6 +84,12 @@ The frontend integrates with the YTB backend API for:
 - S3 presigned URL generation for uploads
 - Video processing status tracking
 
+**⚠️ Important:** See [API_INTEGRATION.md](./API_INTEGRATION.md) for:
+- Complete API endpoint documentation
+- Backend implementation status
+- Known issues and limitations
+- Migration notes from previous API structure
+
 See `lib/api.ts` for the complete API client implementation.
 
 ## Technologies Used
