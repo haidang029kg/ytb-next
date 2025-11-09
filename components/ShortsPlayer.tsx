@@ -25,7 +25,11 @@ interface ShortsPlayerProps {
   onLike?: () => void;
 }
 
-export default function ShortsPlayer({ video, isActive, onLike }: ShortsPlayerProps) {
+export default function ShortsPlayer({
+  video,
+  isActive,
+  onLike,
+}: ShortsPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
@@ -118,11 +122,11 @@ export default function ShortsPlayer({ video, isActive, onLike }: ShortsPlayerPr
 
   if (video.processing_status !== 'completed' || !video.video_url) {
     return (
-      <div className="relative h-screen w-full bg-black flex items-center justify-center">
+      <div className="relative flex h-screen w-full items-center justify-center bg-black">
         <div className="text-center text-white">
           {video.processing_status === 'processing' ? (
             <>
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+              <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-b-2 border-white"></div>
               <p className="text-xl">Processing video...</p>
             </>
           ) : (
@@ -135,7 +139,7 @@ export default function ShortsPlayer({ video, isActive, onLike }: ShortsPlayerPr
 
   return (
     <div
-      className="relative h-screen w-full bg-black snap-start snap-always"
+      className="relative h-screen w-full snap-start snap-always bg-black"
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
@@ -145,7 +149,7 @@ export default function ShortsPlayer({ video, isActive, onLike }: ShortsPlayerPr
         loop
         playsInline
         poster={video.thumbnail_url}
-        className="absolute inset-0 w-full h-full object-contain"
+        className="absolute inset-0 h-full w-full object-contain"
         onClick={togglePlay}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
@@ -155,9 +159,13 @@ export default function ShortsPlayer({ video, isActive, onLike }: ShortsPlayerPr
 
       {/* Play/Pause Overlay */}
       {!isPlaying && (
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="bg-black bg-opacity-50 rounded-full p-6">
-            <svg className="w-16 h-16 text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="bg-opacity-50 rounded-full bg-black p-6">
+            <svg
+              className="h-16 w-16 text-white"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
               <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z" />
             </svg>
           </div>
@@ -165,11 +173,11 @@ export default function ShortsPlayer({ video, isActive, onLike }: ShortsPlayerPr
       )}
 
       {/* Right Side Actions */}
-      <div className="absolute right-4 bottom-24 flex flex-col items-center space-y-6 z-10">
+      <div className="absolute right-4 bottom-24 z-10 flex flex-col items-center space-y-6">
         {/* User Avatar */}
         {video.user && (
           <div className="flex flex-col items-center">
-            <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold border-2 border-white">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-blue-600 font-bold text-white">
               {video.user.full_name[0]?.toUpperCase() || 'U'}
             </div>
           </div>
@@ -178,38 +186,46 @@ export default function ShortsPlayer({ video, isActive, onLike }: ShortsPlayerPr
         {/* Like Button */}
         <button
           onClick={onLike}
-          className="flex flex-col items-center text-white hover:scale-110 transition"
+          className="flex flex-col items-center text-white transition hover:scale-110"
         >
-          <div className="bg-gray-800 bg-opacity-50 rounded-full p-3">
-            <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
+          <div className="bg-opacity-50 rounded-full bg-gray-800 p-3">
+            <svg className="h-7 w-7" fill="currentColor" viewBox="0 0 20 20">
               <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
             </svg>
           </div>
-          <span className="text-xs mt-1">{video.likes}</span>
+          <span className="mt-1 text-xs">{video.likes}</span>
         </button>
 
         {/* Mute/Unmute Button */}
         <button
           onClick={toggleMute}
-          className="flex flex-col items-center text-white hover:scale-110 transition"
+          className="flex flex-col items-center text-white transition hover:scale-110"
         >
-          <div className="bg-gray-800 bg-opacity-50 rounded-full p-3">
+          <div className="bg-opacity-50 rounded-full bg-gray-800 p-3">
             {isMuted ? (
-              <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z" clipRule="evenodd" />
+              <svg className="h-7 w-7" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
               </svg>
             ) : (
-              <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd" />
+              <svg className="h-7 w-7" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z"
+                  clipRule="evenodd"
+                />
               </svg>
             )}
           </div>
         </button>
 
         {/* Share Button */}
-        <button className="flex flex-col items-center text-white hover:scale-110 transition">
-          <div className="bg-gray-800 bg-opacity-50 rounded-full p-3">
-            <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20">
+        <button className="flex flex-col items-center text-white transition hover:scale-110">
+          <div className="bg-opacity-50 rounded-full bg-gray-800 p-3">
+            <svg className="h-7 w-7" fill="currentColor" viewBox="0 0 20 20">
               <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
             </svg>
           </div>
@@ -217,23 +233,33 @@ export default function ShortsPlayer({ video, isActive, onLike }: ShortsPlayerPr
       </div>
 
       {/* Bottom Info */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+      <div className="absolute right-0 bottom-0 left-0 bg-gradient-to-t from-black to-transparent p-4">
         <div className="text-white">
-          <div className="flex items-center space-x-2 mb-2">
+          <div className="mb-2 flex items-center space-x-2">
             {video.user && (
               <>
                 <span className="font-semibold">@{video.user.full_name}</span>
               </>
             )}
           </div>
-          <h3 className="font-semibold text-lg mb-1">{video.title}</h3>
+          <h3 className="mb-1 text-lg font-semibold">{video.title}</h3>
           {video.description && (
-            <p className="text-sm opacity-90 line-clamp-2">{video.description}</p>
+            <p className="line-clamp-2 text-sm opacity-90">
+              {video.description}
+            </p>
           )}
-          <div className="flex items-center text-sm opacity-75 mt-2">
-            <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+          <div className="mt-2 flex items-center text-sm opacity-75">
+            <svg
+              className="mr-1 h-4 w-4"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
               <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-              <path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" />
+              <path
+                fillRule="evenodd"
+                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                clipRule="evenodd"
+              />
             </svg>
             <span>{formatViews(video.views)} views</span>
           </div>

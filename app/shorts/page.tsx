@@ -37,7 +37,8 @@ export default function ShortsPage() {
       const response = await videoAPI.getVideos();
       // Filter only completed videos
       const completedVideos = response.data.filter(
-        (video: Video) => video.processing_status === 'completed' && video.video_url
+        (video: Video) =>
+          video.processing_status === 'completed' && video.video_url
       );
       setVideos(completedVideos);
     } catch (err: any) {
@@ -99,29 +100,33 @@ export default function ShortsPage() {
 
   if (loading) {
     return (
-      <div className="h-screen w-full bg-black flex items-center justify-center">
-        <div className="text-white text-xl">Loading videos...</div>
+      <div className="flex h-screen w-full items-center justify-center bg-black">
+        <div className="text-xl text-white">Loading videos...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="h-screen w-full bg-black flex items-center justify-center">
-        <div className="text-red-500 text-xl">{error}</div>
+      <div className="flex h-screen w-full items-center justify-center bg-black">
+        <div className="text-xl text-red-500">{error}</div>
       </div>
     );
   }
 
   if (videos.length === 0) {
     return (
-      <div className="h-screen w-full bg-black flex items-center justify-center">
+      <div className="flex h-screen w-full items-center justify-center bg-black">
         <div className="text-center text-white">
-          <svg className="w-24 h-24 mx-auto mb-4 opacity-50" fill="currentColor" viewBox="0 0 20 20">
+          <svg
+            className="mx-auto mb-4 h-24 w-24 opacity-50"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
             <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
           </svg>
           <p className="text-xl">No videos available yet</p>
-          <p className="text-gray-400 mt-2">Check back later!</p>
+          <p className="mt-2 text-gray-400">Check back later!</p>
         </div>
       </div>
     );
@@ -130,7 +135,7 @@ export default function ShortsPage() {
   return (
     <div
       ref={containerRef}
-      className="h-screen w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth"
+      className="h-screen w-full snap-y snap-mandatory overflow-y-scroll scroll-smooth"
       style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
     >
       <style jsx>{`
@@ -140,17 +145,15 @@ export default function ShortsPage() {
       `}</style>
 
       {/* Top Navigation Bar */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-black to-transparent p-4">
+      <div className="fixed top-0 right-0 left-0 z-50 bg-gradient-to-b from-black to-transparent p-4">
         <div className="flex items-center justify-between">
           <Link
             href="/studio"
-            className="text-white font-bold text-xl hover:text-blue-400 transition"
+            className="text-xl font-bold text-white transition hover:text-blue-400"
           >
             YTB
           </Link>
-          <div className="text-white text-sm opacity-75">
-            Shorts
-          </div>
+          <div className="text-sm text-white opacity-75">Shorts</div>
         </div>
       </div>
 
@@ -169,20 +172,28 @@ export default function ShortsPage() {
           {currentIndex > 0 && (
             <button
               onClick={() => scrollToVideo(currentIndex - 1)}
-              className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-75 transition z-50"
+              className="bg-opacity-50 hover:bg-opacity-75 fixed top-20 left-1/2 z-50 -translate-x-1/2 transform rounded-full bg-black p-2 text-white transition"
             >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
+              <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
+                  clipRule="evenodd"
+                />
               </svg>
             </button>
           )}
           {currentIndex < videos.length - 1 && (
             <button
               onClick={() => scrollToVideo(currentIndex + 1)}
-              className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-75 transition z-50"
+              className="bg-opacity-50 hover:bg-opacity-75 fixed bottom-4 left-1/2 z-50 -translate-x-1/2 transform rounded-full bg-black p-2 text-white transition"
             >
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clipRule="evenodd"
+                />
               </svg>
             </button>
           )}

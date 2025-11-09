@@ -85,6 +85,7 @@ The frontend integrates with the YTB backend API for:
 - Video processing status tracking
 
 **⚠️ Important:** See [API_INTEGRATION.md](./API_INTEGRATION.md) for:
+
 - Complete API endpoint documentation
 - Backend implementation status
 - Known issues and limitations
@@ -104,17 +105,20 @@ See `lib/api.ts` for the complete API client implementation.
 ## Features in Detail
 
 ### Authentication
+
 - JWT-based authentication with access and refresh tokens
 - Automatic token refresh on expiration
 - Protected routes for authenticated users
 
 ### Video Player
+
 - Adaptive bitrate streaming (HLS)
 - Multiple quality levels (360p, 720p, 1080p)
 - Fallback for Safari native HLS support
 - Error handling and recovery
 
 ### Video Upload
+
 - Multi-step upload process:
   1. Create video metadata
   2. Get S3 presigned URL
@@ -124,6 +128,7 @@ See `lib/api.ts` for the complete API client implementation.
 - Processing status tracking
 
 ### Creator Studio
+
 - View all uploaded videos
 - Track processing status
 - Edit video metadata
@@ -131,8 +136,8 @@ See `lib/api.ts` for the complete API client implementation.
 
 ## Environment Variables
 
-| Variable | Description | Default |
-|----------|-------------|---------|
+| Variable                   | Description     | Default                 |
+| -------------------------- | --------------- | ----------------------- |
 | `NEXT_PUBLIC_API_BASE_URL` | Backend API URL | `http://localhost:8000` |
 
 ## License

@@ -17,7 +17,9 @@ export default function UploadPage() {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState('');
-  const [currentStep, setCurrentStep] = useState<'form' | 'uploading' | 'processing'>('form');
+  const [currentStep, setCurrentStep] = useState<
+    'form' | 'uploading' | 'processing'
+  >('form');
 
   // Redirect to login if not authenticated
   if (!authLoading && !user) {
@@ -104,7 +106,7 @@ export default function UploadPage() {
 
   if (authLoading) {
     return (
-      <div className="flex justify-center items-center h-64">
+      <div className="flex h-64 items-center justify-center">
         <div className="text-xl text-gray-600">Loading...</div>
       </div>
     );
@@ -116,17 +118,19 @@ export default function UploadPage() {
 
   if (currentStep === 'uploading') {
     return (
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <h2 className="text-2xl font-bold text-center mb-6">Uploading Video</h2>
+      <div className="mx-auto max-w-2xl">
+        <div className="rounded-lg bg-white p-8 shadow-md">
+          <h2 className="mb-6 text-center text-2xl font-bold">
+            Uploading Video
+          </h2>
           <div className="mb-4">
-            <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+            <div className="h-4 w-full overflow-hidden rounded-full bg-gray-200">
               <div
-                className="bg-blue-600 h-full transition-all duration-300"
+                className="h-full bg-blue-600 transition-all duration-300"
                 style={{ width: `${uploadProgress}%` }}
               ></div>
             </div>
-            <p className="text-center mt-2 text-gray-600">{uploadProgress}%</p>
+            <p className="mt-2 text-center text-gray-600">{uploadProgress}%</p>
           </div>
           <p className="text-center text-gray-500">
             Please don't close this page while uploading...
@@ -138,11 +142,13 @@ export default function UploadPage() {
 
   if (currentStep === 'processing') {
     return (
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <h2 className="text-2xl font-bold mb-2">Video Uploaded Successfully!</h2>
-          <p className="text-gray-600 mb-4">
+      <div className="mx-auto max-w-2xl">
+        <div className="rounded-lg bg-white p-8 text-center shadow-md">
+          <div className="mx-auto mb-4 h-16 w-16 animate-spin rounded-full border-b-2 border-blue-600"></div>
+          <h2 className="mb-2 text-2xl font-bold">
+            Video Uploaded Successfully!
+          </h2>
+          <p className="mb-4 text-gray-600">
             Your video is now being processed. This may take a few minutes.
           </p>
           <p className="text-sm text-gray-500">Redirecting to studio...</p>
@@ -152,21 +158,24 @@ export default function UploadPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8">Upload Video</h1>
+    <div className="mx-auto max-w-2xl">
+      <h1 className="mb-8 text-3xl font-bold">Upload Video</h1>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-8">
+      <form
+        onSubmit={handleSubmit}
+        className="rounded-lg bg-white p-8 shadow-md"
+      >
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="mb-2 block text-sm font-medium text-gray-700">
             Video File *
           </label>
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-500 transition">
+          <div className="rounded-lg border-2 border-dashed border-gray-300 p-8 text-center transition hover:border-blue-500">
             <input
               type="file"
               accept="video/*"
@@ -178,22 +187,30 @@ export default function UploadPage() {
             <label htmlFor="video-file" className="cursor-pointer">
               {videoFile ? (
                 <div>
-                  <svg className="w-12 h-12 text-blue-600 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                  <svg
+                    className="mx-auto mb-2 h-12 w-12 text-blue-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
                     <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
                   </svg>
-                  <p className="text-blue-600 font-medium">{videoFile.name}</p>
+                  <p className="font-medium text-blue-600">{videoFile.name}</p>
                   <p className="text-sm text-gray-500">
                     {(videoFile.size / 1024 / 1024).toFixed(2)} MB
                   </p>
-                  <p className="text-sm text-blue-600 mt-2">Click to change</p>
+                  <p className="mt-2 text-sm text-blue-600">Click to change</p>
                 </div>
               ) : (
                 <div>
-                  <svg className="w-12 h-12 text-gray-400 mx-auto mb-2" fill="currentColor" viewBox="0 0 20 20">
+                  <svg
+                    className="mx-auto mb-2 h-12 w-12 text-gray-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
                     <path d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 117.753-1.977A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z" />
                   </svg>
                   <p className="text-gray-600">Click to select video file</p>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="mt-1 text-sm text-gray-500">
                     MP4, MOV, AVI, or other video formats
                   </p>
                 </div>
@@ -203,7 +220,10 @@ export default function UploadPage() {
         </div>
 
         <div className="mb-6">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="title"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
             Title *
           </label>
           <input
@@ -214,13 +234,16 @@ export default function UploadPage() {
             required
             maxLength={100}
             disabled={uploading}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500"
             placeholder="Enter video title"
           />
         </div>
 
         <div className="mb-6">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="description"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
             Description
           </label>
           <textarea
@@ -229,13 +252,16 @@ export default function UploadPage() {
             onChange={(e) => setDescription(e.target.value)}
             rows={4}
             disabled={uploading}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500"
             placeholder="Tell viewers about your video"
           />
         </div>
 
         <div className="mb-6">
-          <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="thumbnail"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
             Thumbnail URL
           </label>
           <input
@@ -244,10 +270,10 @@ export default function UploadPage() {
             value={thumbnailUrl}
             onChange={(e) => setThumbnailUrl(e.target.value)}
             disabled={uploading}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500"
             placeholder="https://example.com/thumbnail.jpg"
           />
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="mt-1 text-sm text-gray-500">
             Optional: Provide a URL to your video thumbnail
           </p>
         </div>
@@ -256,7 +282,7 @@ export default function UploadPage() {
           <button
             type="submit"
             disabled={uploading || !videoFile}
-            className="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 rounded-lg bg-blue-600 py-3 text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {uploading ? 'Uploading...' : 'Upload Video'}
           </button>
@@ -264,7 +290,7 @@ export default function UploadPage() {
             type="button"
             onClick={() => router.push('/studio')}
             disabled={uploading}
-            className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition disabled:opacity-50"
+            className="rounded-lg border border-gray-300 px-6 py-3 transition hover:bg-gray-50 disabled:opacity-50"
           >
             Cancel
           </button>

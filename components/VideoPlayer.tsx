@@ -64,7 +64,7 @@ export default function VideoPlayer({ src, poster }: VideoPlayerProps) {
       ref={videoRef}
       controls
       poster={poster}
-      className="w-full aspect-video bg-black rounded-lg"
+      className="aspect-video w-full rounded-lg bg-black"
     >
       Your browser does not support the video tag.
     </video>

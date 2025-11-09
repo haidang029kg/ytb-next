@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
@@ -33,9 +34,12 @@ api.interceptors.response.use(
         const refreshToken = localStorage.getItem('refresh_token');
         if (refreshToken) {
           try {
-            const response = await axios.post(`${API_BASE_URL}/auth/token/refresh`, {
-              refresh_token: refreshToken,
-            });
+            const response = await axios.post(
+              `${API_BASE_URL}/auth/token/refresh`,
+              {
+                refresh_token: refreshToken,
+              }
+            );
 
             const { access_token } = response.data;
             localStorage.setItem('access_token', access_token);
@@ -58,14 +62,23 @@ api.interceptors.response.use(
 
 // Auth API
 export const authAPI = {
-  register: (username: string, email: string, password: string, confirm_password: string) =>
-    api.post('/auth/registration', { username, email, password, confirm_password }),
+  register: (
+    username: string,
+    email: string,
+    password: string,
+    confirm_password: string
+  ) =>
+    api.post('/auth/registration', {
+      username,
+      email,
+      password,
+      confirm_password,
+    }),
 
   login: (username: string, password: string) =>
     api.post('/auth/token', { username, password }),
 
-  getCurrentUser: () =>
-    api.get('/auth/me'),
+  getCurrentUser: () => api.get('/auth/me'),
 };
 
 // Video API
@@ -74,31 +87,28 @@ export const authAPI = {
 // All video endpoints below need to be implemented in the backend first
 export const videoAPI = {
   // TODO: Backend implementation required
-  getVideos: () =>
-    api.get('/studio/videos'),
+  getVideos: () => api.get('/studio/videos'),
 
-  getVideo: (id: string) =>
-    api.get(`/studio/videos/${id}`),
+  getVideo: (id: string) => api.get(`/studio/videos/${id}`),
 
-  getMyVideos: () =>
-    api.get('/studio/videos/my-videos'),
+  getMyVideos: () => api.get('/studio/videos/my-videos'),
 
   createVideo: (data: {
     title: string;
     description?: string;
     thumbnail_url?: string;
-  }) =>
-    api.post('/studio/videos', data),
+  }) => api.post('/studio/videos', data),
 
-  updateVideo: (id: string, data: {
-    title?: string;
-    description?: string;
-    thumbnail_url?: string;
-  }) =>
-    api.patch(`/studio/videos/${id}`, data),
+  updateVideo: (
+    id: string,
+    data: {
+      title?: string;
+      description?: string;
+      thumbnail_url?: string;
+    }
+  ) => api.patch(`/studio/videos/${id}`, data),
 
-  deleteVideo: (id: string) =>
-    api.delete(`/studio/videos/${id}`),
+  deleteVideo: (id: string) => api.delete(`/studio/videos/${id}`),
 
   getPresignedUploadUrl: (filename: string, content_type: string) =>
     api.get('/studio/videos/presigned-upload-url', {

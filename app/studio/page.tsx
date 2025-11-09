@@ -60,7 +60,7 @@ export default function StudioPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="flex justify-center items-center h-64">
+      <div className="flex h-64 items-center justify-center">
         <div className="text-xl text-gray-600">Loading...</div>
       </div>
     );
@@ -81,7 +81,9 @@ export default function StudioPage() {
     const badge = badges[status] || badges.pending;
 
     return (
-      <span className={`px-2 py-1 rounded-full text-xs font-semibold ${badge.color}`}>
+      <span
+        className={`rounded-full px-2 py-1 text-xs font-semibold ${badge.color}`}
+      >
         {badge.text}
       </span>
     );
@@ -89,54 +91,62 @@ export default function StudioPage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
+      <div className="mb-8 flex items-center justify-between">
         <h1 className="text-3xl font-bold">My Studio</h1>
         <Link
           href="/studio/upload"
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+          className="rounded-lg bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700"
         >
           Upload Video
         </Link>
       </div>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700">
           {error}
         </div>
       )}
 
       {videos.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-md p-12 text-center">
-          <svg className="w-24 h-24 text-gray-300 mx-auto mb-4" fill="currentColor" viewBox="0 0 20 20">
+        <div className="rounded-lg bg-white p-12 text-center shadow-md">
+          <svg
+            className="mx-auto mb-4 h-24 w-24 text-gray-300"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
             <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
           </svg>
-          <h2 className="text-2xl font-semibold text-gray-700 mb-2">No videos yet</h2>
-          <p className="text-gray-500 mb-6">Upload your first video to get started</p>
+          <h2 className="mb-2 text-2xl font-semibold text-gray-700">
+            No videos yet
+          </h2>
+          <p className="mb-6 text-gray-500">
+            Upload your first video to get started
+          </p>
           <Link
             href="/studio/upload"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+            className="inline-block rounded-lg bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700"
           >
             Upload Video
           </Link>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="overflow-hidden rounded-lg bg-white shadow-md">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b">
+            <thead className="border-b bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
                   Video
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
                   Views
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
                   Likes
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
                   Actions
                 </th>
               </tr>
@@ -146,7 +156,7 @@ export default function StudioPage() {
                 <tr key={video.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
                     <div className="flex items-center">
-                      <div className="flex-shrink-0 h-16 w-24 bg-gray-200 rounded overflow-hidden">
+                      <div className="h-16 w-24 flex-shrink-0 overflow-hidden rounded bg-gray-200">
                         {video.thumbnail_url ? (
                           <img
                             src={video.thumbnail_url}
@@ -154,15 +164,21 @@ export default function StudioPage() {
                             className="h-full w-full object-cover"
                           />
                         ) : (
-                          <div className="h-full w-full flex items-center justify-center text-gray-400">
-                            <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+                          <div className="flex h-full w-full items-center justify-center text-gray-400">
+                            <svg
+                              className="h-8 w-8"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
                               <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
                             </svg>
                           </div>
                         )}
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{video.title}</div>
+                        <div className="text-sm font-medium text-gray-900">
+                          {video.title}
+                        </div>
                         <div className="text-sm text-gray-500">
                           {new Date(video.created_at).toLocaleDateString()}
                         </div>
@@ -178,7 +194,7 @@ export default function StudioPage() {
                   <td className="px-6 py-4 text-sm text-gray-900">
                     {video.likes}
                   </td>
-                  <td className="px-6 py-4 text-sm font-medium space-x-3">
+                  <td className="space-x-3 px-6 py-4 text-sm font-medium">
                     <Link
                       href={`/video/${video.id}`}
                       className="text-blue-600 hover:text-blue-900"

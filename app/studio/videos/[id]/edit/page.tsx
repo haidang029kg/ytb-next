@@ -75,7 +75,7 @@ export default function EditVideoPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="flex justify-center items-center h-64">
+      <div className="flex h-64 items-center justify-center">
         <div className="text-xl text-gray-600">Loading...</div>
       </div>
     );
@@ -86,24 +86,30 @@ export default function EditVideoPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8">Edit Video</h1>
+    <div className="mx-auto max-w-2xl">
+      <h1 className="mb-8 text-3xl font-bold">Edit Video</h1>
 
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="mb-4 rounded border border-red-400 bg-red-100 px-4 py-3 text-red-700">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        <div className="mb-4 rounded border border-green-400 bg-green-100 px-4 py-3 text-green-700">
           Video updated successfully! Redirecting...
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-8">
+      <form
+        onSubmit={handleSubmit}
+        className="rounded-lg bg-white p-8 shadow-md"
+      >
         <div className="mb-6">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="title"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
             Title *
           </label>
           <input
@@ -114,12 +120,15 @@ export default function EditVideoPage() {
             required
             maxLength={100}
             disabled={saving}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="mb-6">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="description"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
             Description
           </label>
           <textarea
@@ -128,12 +137,15 @@ export default function EditVideoPage() {
             onChange={(e) => setDescription(e.target.value)}
             rows={4}
             disabled={saving}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <div className="mb-6">
-          <label htmlFor="thumbnail" className="block text-sm font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="thumbnail"
+            className="mb-2 block text-sm font-medium text-gray-700"
+          >
             Thumbnail URL
           </label>
           <input
@@ -142,7 +154,7 @@ export default function EditVideoPage() {
             value={thumbnailUrl}
             onChange={(e) => setThumbnailUrl(e.target.value)}
             disabled={saving}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full rounded-lg border border-gray-300 px-4 py-2 focus:border-transparent focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -150,7 +162,7 @@ export default function EditVideoPage() {
           <button
             type="submit"
             disabled={saving}
-            className="flex-1 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+            className="flex-1 rounded-lg bg-blue-600 py-3 text-white transition hover:bg-blue-700 disabled:opacity-50"
           >
             {saving ? 'Saving...' : 'Save Changes'}
           </button>
@@ -158,7 +170,7 @@ export default function EditVideoPage() {
             type="button"
             onClick={() => router.push('/studio')}
             disabled={saving}
-            className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition disabled:opacity-50"
+            className="rounded-lg border border-gray-300 px-6 py-3 transition hover:bg-gray-50 disabled:opacity-50"
           >
             Cancel
           </button>

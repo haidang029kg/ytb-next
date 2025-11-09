@@ -1,10 +1,12 @@
-import nextPlugin from "eslint-config-next";
+import nextPlugin from 'eslint-config-next';
+import prettierConfig from 'eslint-config-prettier';
 
 const eslintConfig = [
   {
-    ignores: [".next/*", "node_modules/*", "out/*", ".next/**/*"],
+    ignores: ['.next/*', 'node_modules/*', 'out/*', '.next/**/*'],
   },
   ...nextPlugin,
+  prettierConfig,
 ];
 
 export default eslintConfig;

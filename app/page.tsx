@@ -12,7 +12,7 @@ export default function HomePage() {
   }, [router]);
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex h-screen items-center justify-center">
       <div className="text-xl text-gray-600">Redirecting to Shorts...</div>
     </div>
   );
