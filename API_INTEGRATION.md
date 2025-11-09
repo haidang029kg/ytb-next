@@ -35,17 +35,22 @@ Located in: `lib/api.ts`
 
 #### Registration Flow ✅ UPDATED
 1. User submits registration form
-2. Frontend calls `POST /auth/registration` with `email`, `password`, `full_name`
-3. Backend creates user and sends verification email
-4. User receives email and clicks verification link
-5. User must verify email via `GET /auth/registration/confirmation?token=...`
-6. After verification, user can login
+2. Frontend calls `POST /auth/registration` with:
+   - `username` (required)
+   - `email` (required)
+   - `password` (required)
+   - `confirm_password` (required)
+3. Backend validates passwords match and creates user
+4. Backend sends verification email
+5. User receives email and clicks verification link
+6. User must verify email via `GET /auth/registration/confirmation?token=...`
+7. After verification, user can login
 
 **Note:** Registration does NOT auto-login users. Email verification is required first.
 
 #### Login Flow ✅ UPDATED
-1. User submits login form with `username` and `password`
-2. Frontend calls `POST /auth/token`
+1. User submits login form with `username` (or email) and `password`
+2. Frontend calls `POST /auth/token` with `application/x-www-form-urlencoded` data (OAuth2 standard)
 3. Backend returns:
    ```json
    {
@@ -215,9 +220,18 @@ Required environment variables for video functionality:
 - `/refresh-token` → `/auth/token/refresh` ✅
 - `/current-user` → `/auth/me` ✅
 
+**Registration Fields:**
+- Old: `email`, `password`, `full_name`
+- New: `username`, `email`, `password`, `confirm_password` ✅
+- Added: Username field and password confirmation
+
 **Registration Response:**
 - Old: Returned `{ access_token, refresh_token, user }`
 - New: Returns only `{ user }` - requires email verification first ✅
+
+**Login Format:**
+- Old: JSON with `{ username, password }`
+- New: Form data (application/x-www-form-urlencoded) - OAuth2 standard ✅
 
 **Login Response:**
 - Old: May have included user object

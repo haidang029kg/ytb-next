@@ -58,11 +58,21 @@ api.interceptors.response.use(
 
 // Auth API
 export const authAPI = {
-  register: (email: string, password: string, full_name: string) =>
-    api.post('/auth/registration', { email, password, full_name }),
+  register: (username: string, email: string, password: string, confirm_password: string) =>
+    api.post('/auth/registration', { username, email, password, confirm_password }),
 
-  login: (username: string, password: string) =>
-    api.post('/auth/token', { username, password }),
+  login: (username: string, password: string) => {
+    // OAuth2 requires form data, not JSON
+    const formData = new URLSearchParams();
+    formData.append('username', username);
+    formData.append('password', password);
+
+    return axios.post(`${API_BASE_URL}/auth/token`, formData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+  },
 
   getCurrentUser: () =>
     api.get('/auth/me'),

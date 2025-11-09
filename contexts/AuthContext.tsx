@@ -13,7 +13,7 @@ interface AuthContextType {
   user: User | null;
   loading: boolean;
   login: (username: string, password: string) => Promise<void>;
-  register: (email: string, password: string, full_name: string) => Promise<void>;
+  register: (username: string, email: string, password: string, confirmPassword: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -62,10 +62,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(userResponse.data);
   };
 
-  const register = async (email: string, password: string, full_name: string) => {
+  const register = async (username: string, email: string, password: string, confirmPassword: string) => {
     // Registration only creates the user and sends verification email
     // It does NOT return tokens - user must verify email first, then login
-    await authAPI.register(email, password, full_name);
+    await authAPI.register(username, email, password, confirmPassword);
     // User is not logged in after registration - they need to verify email first
   };
 
