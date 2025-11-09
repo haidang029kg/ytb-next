@@ -90,13 +90,21 @@ export default function StudioPage() {
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">My Studio</h1>
-        <Link
-          href="/studio/upload"
-          className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
-        >
-          Upload Video
-        </Link>
+        <div>
+          <h1 className="text-3xl font-bold">My Studio</h1>
+          <p className="text-gray-600 mt-2">Manage your video content</p>
+        </div>
+        <div className="flex gap-3">
+          <Link
+            href="/studio/upload"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Create New Video
+          </Link>
+        </div>
       </div>
 
       {error && (
@@ -111,16 +119,50 @@ export default function StudioPage() {
             <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
           </svg>
           <h2 className="text-2xl font-semibold text-gray-700 mb-2">No videos yet</h2>
-          <p className="text-gray-500 mb-6">Upload your first video to get started</p>
+          <p className="text-gray-500 mb-6">Create your first video to get started</p>
           <Link
             href="/studio/upload"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+            className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition"
           >
-            Upload Video
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Create New Video
           </Link>
         </div>
       ) : (
         <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          {/* Table header with stats and action */}
+          <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+            <div className="flex items-center gap-6">
+              <div>
+                <p className="text-sm text-gray-500">Total Videos</p>
+                <p className="text-2xl font-bold text-gray-900">{videos.length}</p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Published</p>
+                <p className="text-2xl font-bold text-green-600">
+                  {videos.filter(v => v.processing_status === 'completed').length}
+                </p>
+              </div>
+              <div>
+                <p className="text-sm text-gray-500">Processing</p>
+                <p className="text-2xl font-bold text-blue-600">
+                  {videos.filter(v => v.processing_status === 'processing').length}
+                </p>
+              </div>
+            </div>
+            <Link
+              href="/studio/upload"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition flex items-center gap-2 text-sm"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              New Video
+            </Link>
+          </div>
+
           <table className="w-full">
             <thead className="bg-gray-50 border-b">
               <tr>
